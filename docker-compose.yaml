@@ -1,0 +1,44 @@
+version: "3"
+services:
+  client:
+    image: node
+    container_name: client
+    ports:
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: ./client
+        target: /code
+    working_dir: /code
+    command: ["http-server"]
+  server:
+    image: node
+    container_name: server
+    ports:
+      - 3000:3000
+    environment:
+      - POSTGRES_USER=bird-admin
+      - POSTGRES_DB=aviary
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=db
+    volumes:
+      - type: bind
+        source: ./server
+        target: /code
+    working_dir: /code
+    depends_on:
+      - db
+    command: bash -c "npm install && npm run seed && npm run dev"
+  db:
+    image: postgres
+    container_name: bird-db
+    environment:
+      - POSTGRES_USER=bird-admin
+      - POSTGRES_DB=aviary
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+
+volumes:
+  dbdata:

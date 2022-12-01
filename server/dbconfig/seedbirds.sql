@@ -1,5 +1,6 @@
-INSERT INTO birds (name, age)
+INSERT INTO
+birds (name, age)
 VALUES
-("Pete", 87),
-("Pingu", 10),
-("Mildred", 70);
+('Pete', 87),
+('Pingu', 10),
+('Mildred', 70);

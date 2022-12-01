@@ -9,7 +9,7 @@ const birdRoutes = require("./routes/birds");
 server.use("/birds", birdRoutes);
 
 server.get("/", (req, res) => {
-  res.send("Welcome");
+  res.send({ message: "Welcome" });
 });
 
 module.exports = server;

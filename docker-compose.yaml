@@ -17,11 +17,11 @@ services:
     ports:
       - 3000:3000
     environment:
-      - POSTGRES_USER=bird-admin
-      - POSTGRES_DB=aviary
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_PORT=5432
-      - POSTGRES_HOST=db
+      - PGUSER=bird-admin
+      - PGDATABASE=aviary
+      - PGPASSWORD=password
+      - PGPORT=5432
+      - PGHOST=db
     volumes:
       - type: bind
         source: ./server
@@ -38,7 +38,8 @@ services:
       - POSTGRES_DB=aviary
       - POSTGRES_PASSWORD=password
     volumes:
-      - "dbdata:/var/lib/postgresql/data"
+      - ./db:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/postgresql/data
 
 volumes:
   dbdata:

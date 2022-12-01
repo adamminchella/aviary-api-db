@@ -4,7 +4,7 @@ const birdsController = require("../controllers/birds");
 
 router.get("/", birdsController.index);
 router.get("/:id", birdsController.show);
-router.get("/new", birdsController.new);
+router.get("/new", birdsController.neww);
 router.get("/:id/edit", birdsController.edit);
 router.post("/", birdsController.create);
 router.put("/:id", birdsController.update);

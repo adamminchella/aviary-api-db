@@ -37,4 +37,16 @@ async function destroy(req, res) {
   }
 }
 
-module.exports = { index, show, create, destroy };
+async function update(req, res) {
+  res.status(501);
+}
+
+async function edit(req, res) {
+  res.status(501);
+}
+
+async function neww(req, res) {
+  res.status(501);
+}
+
+module.exports = { index, show, create, destroy, update, edit, neww };

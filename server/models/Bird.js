@@ -1,5 +1,6 @@
 // Model is a representation of the data in our code
 // Models will represent the data in our database
+const { resolve } = require("path");
 const db = require("../dbconfig/init");
 
 module.exports = class Bird {
@@ -30,7 +31,34 @@ module.exports = class Bird {
         let bird = new Bird(birdData.rows[0]);
         resolve(bird);
       } catch (err) {
-        reject("Mildred not found");
+        reject("Bird not found");
+      }
+    });
+  }
+
+  static async create(birdData) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { name, age } = birdData;
+        let result = await db.query(
+          `INSERT INTO birds (name, age) VALUES (${name}, ${age}) RETURNING id`
+        );
+        resolve(result.rows[0]);
+      } catch (err) {
+        reject("Bird could not be created");
+      }
+    });
+  }
+
+  destroy() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await db.query(
+          `DELETE FROM birds WHERE id = ${this.id}`
+        );
+        resolve("Bird was destroyed");
+      } catch (err) {
+        reject("Bird could not be destroyed");
       }
     });
   }

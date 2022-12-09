@@ -20,10 +20,16 @@ async function show(req, res) {
 
 async function create(req, res) {
   try {
-    const newBird = await Bird.create(req.body);
-    res.status(201).json(newBird);
+    const foundBird = await Bird.doesBirdExist(req.body.name);
+    if (foundBird) {
+      throw new Error("Bird already exists");
+    } else {
+      const newBird = await Bird.create(req.body);
+      console.log(newBird);
+      res.status(201).json(newBird);
+    }
   } catch (err) {
-    res.status(422).json({ err });
+    res.status(422).json({ err: err.message });
   }
 }
 
@@ -38,7 +44,12 @@ async function destroy(req, res) {
 }
 
 async function update(req, res) {
-  res.status(501);
+  try {
+    const bird = await Bird.update(req.body);
+    res.status(200).json(bird);
+  } catch (err) {
+    res.status(417).json({ err });
+  }
 }
 
 async function edit(req, res) {

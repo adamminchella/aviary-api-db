@@ -10,7 +10,7 @@ services:
         source: ./client
         target: /code
     working_dir: /code
-    command: ["http-server"]
+    command: bash -c "npx http-server"
   server:
     image: node
     container_name: server
